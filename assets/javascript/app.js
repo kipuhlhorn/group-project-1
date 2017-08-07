@@ -52,12 +52,13 @@ $("#address input").click(showPage)
 	function fillInAddress() {
 	// Get the place details from the autocomplete object.
 			place = autocomplete.getPlace();
+			console.log(place);
 	// variables for zillow API to generate calling
 		 number= place.address_components[0].long_name;
 		 street = place.address_components[1].long_name;
-		 city = place.address_components[2].long_name;
-		 state_short = place.address_components[4].short_name;
-		 zipCode = place.address_components[6].long_name;	        
+		 city = place.address_components[3].long_name;
+		 state_short = place.address_components[5].short_name;
+		 zipCode = place.address_components[7].long_name;	        
 		// variables for crimespot API to generate calling;
 		latitude = place.geometry.location.lat();
 		longitude = place.geometry.location.lng();
@@ -67,7 +68,6 @@ $("#address input").click(showPage)
 		street = street.replace(" ", "+");
 		city = city.replace(" ", "+");
 		street = street.replace(" ", "+");
-		console.log("street = " + street);
 		city = city.replace(" ", "+");
 		zipCode = zipCode.replace(" ", "+");
 	}
@@ -82,8 +82,7 @@ $("button").on("click", function(event){
 	event.preventDefault();
 	showPage()
 
-// zillow API calling 
-		function xmlToJson(xml) {
+function xmlToJson(xml) {
     
     // Create the return object
     var obj = {};
@@ -119,16 +118,20 @@ $("button").on("click", function(event){
     return obj;
 };
 
-		 var queryURL = "http://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=X1-ZWz1930iltfqiz_35s1w&address=" 
-	+ number + street + "&citystatezip=" + city + state_short;
+	var queryURL = "http://www.zillow.com/webservice/GetUpdatedPropertyDetails.htm?zws-id=X1-ZWz1930iltfqiz_35s1w&address=" 
+	+ number + street + "&citystatezip=" + city + state_short + zipCode;
 
 	$.ajax({
 		url:queryURL,
 		method: "GET"
 	}).done(function(data){
 		console.log(queryURL);
-		console.log(data)
-	});
+		console.log(xmlToJson(data));
+		var result = xmlToJson(data).response.results.result;
+		// var zindexValue = result
+
+
+			});
 
 
 // 
