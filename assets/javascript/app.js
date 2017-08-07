@@ -73,12 +73,14 @@ $("#address input").click(showPage)
 	}
 // // trigger click event to call zillow API;
 $("button").on("click", function(event){
-	console.log("on click event");
-	console.log("number = " + number);
-	console.log("street = " + street);
-	console.log("city = " + city);
-	console.log("state_short = " + state_short);
-	console.log("zipCode = " + zipCode);
+	// console.log("on click event");
+	// console.log("number = " + number);
+	// console.log("street = " + street);
+	// console.log("city = " + city);
+	// console.log("state_short = " + state_short);
+	// console.log("zipCode = " + zipCode);
+	// console.log("latitude =" + latitude);
+	// console.log("longitude =" + longitude);
 	event.preventDefault();
 	showPage()
 
@@ -118,7 +120,7 @@ function xmlToJson(xml) {
     return obj;
 };
 
-	var queryURL = "http://www.zillow.com/webservice/GetUpdatedPropertyDetails.htm?zws-id=X1-ZWz1930iltfqiz_35s1w&address=" 
+	var queryURL = "http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=X1-ZWz1930iltfqiz_35s1w&address=" 
 	+ number + street + "&citystatezip=" + city + state_short + zipCode;
 
 	$.ajax({
@@ -127,8 +129,11 @@ function xmlToJson(xml) {
 	}).done(function(data){
 		console.log(queryURL);
 		console.log(xmlToJson(data));
-		var result = xmlToJson(data).response.results.result;
-		// var zindexValue = result
+		var result = xmlToJson(data)["SearchResults:searchresults"].response.results.result;
+		var amount = result.zestimate.amount["#text"];
+		console.log("amount is: $" + amount);
+		var zpid = result.zpid["#text"];
+		console.log(zpid);
 
 
 			});
