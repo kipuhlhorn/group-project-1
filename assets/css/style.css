@@ -1,9 +1,35 @@
 .jumbotron {
     margin-bottom: 0px;
-    background-image: url(../img/jumbotronbackground.jpg);
-    background-position: 0% 25%;
+    background-image: url(http://i.imgur.com/Q6twHMl.jpg);
+    background-position: 45% 45%;
     background-size: cover;
     background-repeat: no-repeat;
     color: black;
-    text-shadow: black 0.3em 0.3em 0.3em;
 }
+
+html, body {
+	margin: 0px;
+	padding: 0px;	
+}
+
+#header {
+	margin-bottom: 0px;
+	text-decoration-color: white;
+    background-color: #1A242F;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: #1A242F;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+   
+}
+
