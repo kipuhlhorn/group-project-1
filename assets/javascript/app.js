@@ -100,7 +100,7 @@ function xmlToJson(xml) {
     return obj;
 };
 
-	var queryURL = "http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=X1-ZWz1930iltfqiz_35s1w&address=" 
+	var queryURL = "http://www.zillow.com/webservice/GetUpdatedPropertyDetails.htm?zws-id=X1-ZWz1930iltfqiz_35s1w&address=" 
 	+ number + street + "&citystatezip=" + city + state_short + zipCode;
 
 	$.ajax({
@@ -109,8 +109,8 @@ function xmlToJson(xml) {
 	}).done(function(data){
 		console.log(queryURL);
 		console.log(xmlToJson(data));
-		var result = xmlToJson(data).response.results.result
-		var zindexValue = result.
+		var result = xmlToJson(data).response.results.result;
+		// var zindexValue = result
 
 
 			});
