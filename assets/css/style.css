@@ -13,9 +13,17 @@ html, body {
 }
 
 #header {
-	margin-bottom: 0px;
-	text-decoration-color: white;
+    bottom: 0;
+    right: 0;
+    left: 0;
     background-color: #1A242F;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+
 }
 
 .footer {
@@ -33,3 +41,6 @@ html, body {
    
 }
 
+#page2{
+    display:none;
+}

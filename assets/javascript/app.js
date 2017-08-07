@@ -1,3 +1,20 @@
+ function showPage(){
+    console.log("ok");
+    var page2=document.getElementById("page2");
+    var page1=document.getElementById("page1");
+
+    if  (page2.style.display=="none"){
+		page2.style.display="block";
+		page1.style.display="none";
+		}
+    else 
+        {page2.style.display="none";
+        page1.style.display="block";
+		}}
+
+
+$("#address input").click(showPage)
+
 	var number;
 	var state_short;
 	var city;
@@ -63,6 +80,7 @@ $("button").on("click", function(event){
 	console.log("state_short = " + state_short);
 	console.log("zipCode = " + zipCode);
 	event.preventDefault();
+	showPage()
 
 // zillow API calling 
 		function xmlToJson(xml) {
