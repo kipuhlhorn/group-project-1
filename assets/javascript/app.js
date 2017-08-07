@@ -27,7 +27,6 @@ $("#address input").click(showPage)
 // This example requires the Places library. Include the libraries=places
 // parameter when you first load the API. 
 	var placeSearch, autocomplete;
-	var autocomplete2;
 	var componentForm = {
 	street_number: 'short_name',
 	route: 'long_name',
@@ -48,20 +47,11 @@ $("#address input").click(showPage)
 	// When the user selects an address from the dropdown, populate the address
 	// fields in the form.
 		autocomplete.addListener('place_changed', fillInAddress);
-
-		autocomplete2 = new google.maps.places.Autocomplete(
-	    /** @type {!HTMLInputElement} */
-	    (document.getElementById('name-input2')),
-	    {types: ['geocode']});
-
-	// When the user selects an address from the dropdown, populate the address
-	// fields in the form.
-		autocomplete.addListener('place_changed', fillInAddress);
 	}
 
 	function fillInAddress() {
 	// Get the place details from the autocomplete object.
-			place = autocomplete.getPlace();
+	place = autocomplete.getPlace();
 			console.log(place);
 	// variables for zillow API to generate calling
 		 number= place.address_components[0].long_name;
@@ -73,19 +63,6 @@ $("#address input").click(showPage)
 		latitude = place.geometry.location.lat();
 		longitude = place.geometry.location.lng();
 
-	// Get the place details from the autocomplete object.
-			place2 = autocomplete2.getPlace();
-			console.log(place);
-	// variables for zillow API to generate calling
-		 number2= place2.address_components[0].long_name;
-		 street2 = place2.address_components[1].long_name;
-		 city2 = place2.address_components[3].long_name;
-		 state_short2 = place2.address_components[5].short_name;
-		 zipCode2 = place2.address_components[7].long_name;	        
-		// variables for crimespot API to generate calling;
-		latitude2 = place2.geometry.location.lat();
-		longitude2 = place2.geometry.location.lng();
-
 // replacing “ ” to "+" 
 		number = number.replace(" ", "+");
 		street = street.replace(" ", "+");
@@ -93,17 +70,8 @@ $("#address input").click(showPage)
 		street = street.replace(" ", "+");
 		city = city.replace(" ", "+");
 		zipCode = zipCode.replace(" ", "+");
-
-		number2 = number.replace(" ", "+");
-		street2 = street.replace(" ", "+");
-		city2 = city.replace(" ", "+");
-		street2 = street.replace(" ", "+");
-		city2 = city.replace(" ", "+");
-		zipCode2 = zipCode.replace(" ", "+");
-
 	}
-
-// // trigger click event to call zillow API;
+// trigger click event to call zillow API;
 $("button").on("click", function(event){
 	// console.log("on click event");
 	// console.log("number = " + number);
@@ -116,7 +84,7 @@ $("button").on("click", function(event){
 	event.preventDefault();
 	showPage()
 
-
+// converting xml to Json format
 function xmlToJson(xml) {
     
     // Create the return object
@@ -152,29 +120,40 @@ function xmlToJson(xml) {
     }
     return obj;
 };
-
-	var queryURL = "http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=X1-ZWz1930iltfqiz_35s1w&address=" 
+// Zillow Get Search Results API Call;
+	var queryURL = "http://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=X1-ZWz1930iltfqiz_35s1w&address=" 
 	+ number + street + "&citystatezip=" + city + state_short + zipCode;
 
 	$.ajax({
 		url:queryURL,
 		method: "GET"
 	}).done(function(data){
-		console.log(queryURL);
-		console.log(xmlToJson(data));
+			console.log(queryURL);
+			console.log(xmlToJson(data));
+		// define result for further grabbing value from objects
 		var result = xmlToJson(data)["SearchResults:searchresults"].response.results.result;
-		var amount = result.zestimate.amount["#text"];
-		console.log("amount is: $" + amount);
-		var zpid = result.zpid["#text"];
-		console.log(zpid);
-
-
-			});
-
-
-// 
+		// property estimate value  
+		var value = result.zestimate.amount["#text"];
+			console.log("amount is: $" + value);
+		// property Sqft;
+		var lotSqft = result.lotSizeSqFt["#text"];
+			console.log(lotSqft + "Sqft");
+		// property yeat of built
+		var yearBuilt = result.yearBuilt["#text"];
+			console.log("year: " + yearBuilt);
+  });
+// CrimeSpot API Call;
+	var queryURL2 = "http://api.spotcrime.com/crimes.json?key=privatekeyforspotcrimepublicusers-commercialuse-877.410.1607&lat=" + latitude + "&lon=" + longitude + "&radius=50"; 
+	$.ajax({
+		url:queryURL2,
+		method: "GET"
+	}).done(function(data){
+		// console.log("link = " + queryURL2);
+		// console.log("this is ", data);
+ 	});
 
 });
+
 
         
      
