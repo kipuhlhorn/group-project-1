@@ -6,6 +6,7 @@
     if  (page2.style.display=="none"){
 		page2.style.display="block";
 		page1.style.display="none";
+		$("body").css("background", "white")
 		}
     else 
         {page2.style.display="none";
