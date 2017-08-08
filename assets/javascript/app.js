@@ -69,7 +69,7 @@ $("#address input").click(showPage)
 		 street = place.address_components[1].long_name;
 		 city = place.address_components[3].long_name;
 		 state_short = place.address_components[5].short_name;
-		 zipCode = place.address_components[7].long_name;	        
+		 zipCode = place.address_components[7].long_name;        
 		// variables for crimespot API to generate calling;
 		latitude = place.geometry.location.lat();
 		longitude = place.geometry.location.lng();
