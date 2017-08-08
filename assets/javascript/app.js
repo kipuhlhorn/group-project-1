@@ -54,6 +54,8 @@ $("#address input").click(showPage)
         /** @type {!HTMLInputElement} */
         (document.getElementById('name-input2')),
         {types: ['geocode']});
+
+        autocomplete.addListener('place_changed', fillInAddress);
 	}
 
 	function fillInAddress() {
@@ -72,7 +74,6 @@ $("#address input").click(showPage)
 
 	 // Get the place details from the autocomplete object.
      place2 = autocomplete2.getPlace();
-            console.log(place);
     // variables for zillow API to generate calling
         number2= place2.address_components[0].long_name;
         street2 = place2.address_components[1].long_name;
@@ -161,10 +162,12 @@ function xmlToJson(xml) {
 			// console.log(xmlToJson(data));
 		// define result for further grabbing value from objects
 		var result = xmlToJson(data)["SearchResults:searchresults"].response.results.result;
-		// property estimate value  
+		// display property value 
+		var newDiv = $("<div id='value'>");			
 		var value = result.zestimate.amount["#text"];
-			console.log("amount is: $" + value);
-		// property Sqft;
+			$("#collapse1").html("Value: $" + value);
+			// console.log("amount is: $" + value);
+		// display property Sqft;
 		var lotSqft = result.lotSizeSqFt["#text"];
 			console.log(lotSqft + "Sqft");
 		// property yeat of built
