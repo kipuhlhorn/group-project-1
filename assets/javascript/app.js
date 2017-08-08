@@ -226,6 +226,13 @@ function getAddressInfo() {
 		}
 
 	});
+	// pictures
+ 	var googleStreetKey = "&key=AIzaSyAP57DeGUmfiilQmptbuIncPhFynnZaLmQ";
+    var queryURL4 = "https://maps.googleapis.com/maps/api/streetview=" + latitude + "," + longitude + googleStreetKey;
+     
+     var pic = $("<img>").attr("src", queryURL4);
+     $("#property").html(pic);
+  
 
 	addressFound = true;
 	};
