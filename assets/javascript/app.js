@@ -13,6 +13,10 @@
         page1.style.display="block";
 		}}
 
+jQuery('.dblClickDisabled').bind('dblclick',function(e){e.preventDefault();
+})
+
+
 
 $("#address input").click(showPage)
 
@@ -72,16 +76,7 @@ $("#address input").click(showPage)
 
 	 // Get the place details from the autocomplete object.
      place2 = autocomplete2.getPlace();
-            console.log(place);
-    // variables for zillow API to generate calling
-        number2= place2.address_components[0].long_name;
-        street2 = place2.address_components[1].long_name;
-        city2 = place2.address_components[3].long_name;
-        state_short2 = place2.address_components[5].short_name;
-        zipCode2 = place2.address_components[7].long_name;         
-        // variables for crimespot API to generate calling;
-        latitude2 = place2.geometry.location.lat();
-        longitude2 = place2.geometry.location.lng();
+            console.log(place);       
 
 
 // replacing “ ” to "+" 
