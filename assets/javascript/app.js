@@ -83,28 +83,7 @@ $("button").on("click", function(event){
 	// console.log("longitude =" + longitude);
 	event.preventDefault();
 	showPage()
-// Property pictures from google place API 
-	var googleKey = "&key=AIzaSyCGlIx60fJjaUtHja6IujdQL-wg5PvT_OM";
-	var queryURL3 = "https://maps.googleapis.com/maps/api/place/textsearch/json?&query=" + number + street + city + zipCode + googleKey;
-	$.ajax({
-		url:queryURL3,
-		method: "GET"
-	}).done(function(data){
-		// console.log("this is ", queryURL3);
-		// console.log("this is ", data);
-		// grabbing information for required parameters for google photos API call
-		var place_id = data.results["0"].place_id;
-			console.log("this is ", place_id);
-		var queryURL4 = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + place_id + googleKey;
-			$.ajax({
-				url: queryURL4,
-				method: "GET"
-			}).done(function(data){
-				console.log("this is ", queryURL4);
-				console.log("this is ", data);
-			})
 
-	});
 // converting xml to Json format
 function xmlToJson(xml) {
     
@@ -150,8 +129,8 @@ function xmlToJson(xml) {
 		url:queryURL,
 		method: "GET"
 	}).done(function(data){
-			console.log(queryURL);
-			console.log(xmlToJson(data));
+			// console.log(queryURL);
+			// console.log(xmlToJson(data));
 		// define result for further grabbing value from objects
 		var result = xmlToJson(data)["SearchResults:searchresults"].response.results.result;
 		// property estimate value  
@@ -172,18 +151,36 @@ function xmlToJson(xml) {
 		method: "GET"
 	}).done(function(data){
 		// console.log("link = " + queryURL2);
-		// console.log("this is ", data);
+		console.log("this is ", data);
 	// generate crimespot details;
 		var crimes = data.crimes;
 	// loop crimespot object array;
 		for (i = 0 ; i < 5; i++){
-			console.log(crimes[i].type);
-			console.log(crimes[i].date);
-			console.log(crimes[i].address);
+			var type = crimes[i].type;
+			var date = crimes[i].date;
+			var addressCrime = crimes[i].address;
 		}
 
  	});
+// Nearby school rating from google place nearbySearch API 
+	var googleKey = "&key=AIzaSyCGlIx60fJjaUtHja6IujdQL-wg5PvT_OM";
+	var queryURL3 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&location=" + latitude + "," + longitude + "&radius=10000&type=school" + googleKey;
+	$.ajax({
+		url:queryURL3,
+		method: "GET"
+	}).done(function(data){
+		// console.log("this is ", queryURL3);
+		console.log("this is ", data);
 
+		var schoolResult = data.results;
+		for (i = 0; i < 5 ; i++){
+		var rating = schoolResult[i].rating;
+		var schoolName = schoolResult[i].name;
+		console.log(rating);
+		console.log(schoolName);
+		}
+
+	});
 });
 
 
