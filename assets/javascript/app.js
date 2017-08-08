@@ -28,6 +28,7 @@ $("#address input").click(showPage)
 // This example requires the Places library. Include the libraries=places
 // parameter when you first load the API. 
 	var placeSearch, autocomplete;
+	var autocomplete2;
 	var componentForm = {
 	street_number: 'short_name',
 	route: 'long_name',
@@ -48,6 +49,11 @@ $("#address input").click(showPage)
 	// When the user selects an address from the dropdown, populate the address
 	// fields in the form.
 		autocomplete.addListener('place_changed', fillInAddress);
+
+		autocomplete2 = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */
+        (document.getElementById('name-input2')),
+        {types: ['geocode']});
 	}
 
 	function fillInAddress() {
