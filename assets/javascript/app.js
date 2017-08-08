@@ -151,6 +151,15 @@ function xmlToJson(xml) {
 	}).done(function(data){
 		// console.log("link = " + queryURL2);
 		// console.log("this is ", data);
+	// generate crimespot details;
+		var crimes = data.crimes;
+	// loop crimespot object array;
+		for (i = 0 ; i < 5; i++){
+			console.log(crimes[i].type);
+			console.log(crimes[i].date);
+			console.log(crimes[i].address);
+		}
+
  	});
 
 });
