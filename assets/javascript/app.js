@@ -69,7 +69,6 @@ $("#address input").click(showPage)
 		street = street.replace(" ", "+");
 		city = city.replace(" ", "+");
 		street = street.replace(" ", "+");
-		city = city.replace(" ", "+");
 		zipCode = zipCode.replace(" ", "+");
 	}
 // trigger click event to call zillow API;
@@ -84,7 +83,28 @@ $("button").on("click", function(event){
 	// console.log("longitude =" + longitude);
 	event.preventDefault();
 	showPage()
+// Property pictures from google place API 
+	var googleKey = "&key=AIzaSyCGlIx60fJjaUtHja6IujdQL-wg5PvT_OM";
+	var queryURL3 = "https://maps.googleapis.com/maps/api/place/textsearch/json?&query=" + number + street + city + zipCode + googleKey;
+	$.ajax({
+		url:queryURL3,
+		method: "GET"
+	}).done(function(data){
+		// console.log("this is ", queryURL3);
+		// console.log("this is ", data);
+		// grabbing information for required parameters for google photos API call
+		var place_id = data.results["0"].place_id;
+			console.log("this is ", place_id);
+		var queryURL4 = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + place_id + googleKey;
+			$.ajax({
+				url: queryURL4,
+				method: "GET"
+			}).done(function(data){
+				console.log("this is ", queryURL4);
+				console.log("this is ", data);
+			})
 
+	});
 // converting xml to Json format
 function xmlToJson(xml) {
     
@@ -122,7 +142,8 @@ function xmlToJson(xml) {
     return obj;
 };
 // Zillow Get Search Results API Call;
-	var queryURL = "http://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=X1-ZWz1930iltfqiz_35s1w&address=" 
+	var zillowKey = "X1-ZWz1930iltfqiz_35s1w";
+	var queryURL = "http://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=" + zillowKey + "&address=" 
 	+ number + street + "&citystatezip=" + city + state_short + zipCode;
 
 	$.ajax({
@@ -144,7 +165,8 @@ function xmlToJson(xml) {
 			console.log("year: " + yearBuilt);
   });
 // CrimeSpot API Call;
-	var queryURL2 = "http://api.spotcrime.com/crimes.json?key=privatekeyforspotcrimepublicusers-commercialuse-877.410.1607&lat=" + latitude + "&lon=" + longitude + "&radius=50"; 
+	var crimeKey = "privatekeyforspotcrimepublicusers-commercialuse-877.410.1607";
+	var queryURL2 = "http://api.spotcrime.com/crimes.json?key=" + crimeKey +"&lat=" + latitude + "&lon=" + longitude + "&radius=50"; 
 	$.ajax({
 		url:queryURL2,
 		method: "GET"
