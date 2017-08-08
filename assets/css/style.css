@@ -62,3 +62,11 @@ body {
 #page2{
     display:none;
 }
+
+.data th,
+.data td
+    {
+
+    margin: 2px;
+    padding: 5px;
+}

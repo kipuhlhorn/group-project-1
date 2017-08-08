@@ -38,7 +38,7 @@
                   <input class="form-control" id="name-input" type="text">
                   <br>
             
-            <button class="btn btn-primary" id="address input" type="submit">Submit</button>
+            <button class="btn btn-primary" id="address-input" type="submit">Submit</button>
      
     </div>
             
@@ -103,7 +103,7 @@
       </h4>
     </div>
     <div id="collapse1" class="panel-collapse collapse in">
-      <div class="panel-body">This is where our information about home value will go.</div>
+      <div class="panel-body" id="zillow"></div>
     </div>
   </div>
   <div class="panel panel-default">
@@ -114,7 +114,16 @@
       </h4>
     </div>
     <div id="collapse2" class="panel-collapse collapse">
-      <div class="panel-body">This is where our information about crime data will go.</div>
+      <div class="panel-body">
+        <table class="data" id="crime">
+            <thead>
+              <th>type</th>
+              <th>date</th>
+              <th>address</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+      </div>
     </div>
   </div>
   <div class="panel panel-default">
@@ -125,7 +134,15 @@
       </h4>
     </div>
     <div id="collapse3" class="panel-collapse collapse">
-      <div class="panel-body">This is where our information about schools will go.</div>
+      <div class="panel-body">
+        <table class="data" id="school">
+            <thead>
+              <th>School Name</th>
+              <th>Rating</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -142,6 +159,8 @@
 </div>
 <!-- Jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+<!-- Bootystrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- Javascript -->
 <script type="text/javascript" src="assets/javascript/app.js"></script> 
 <!-- Google API -->

@@ -11,11 +11,17 @@
     else 
         {page2.style.display="none";
         page1.style.display="block";
-		}}
+		}
+	}
+
+jQuery('.dblClickDisabled').bind('dblclick',function(e){
+	e.preventDefault();
+});
 
 
-$("#address input").click(showPage)
 
+// $("#address input").click(showPage)
+	var addressFound = false;
 	var number;
 	var state_short;
 	var city;
@@ -61,7 +67,7 @@ $("#address input").click(showPage)
 	function fillInAddress() {
 	// Get the place details from the autocomplete object.
 	place = autocomplete.getPlace();
-			console.log(place);
+			// console.log(place);
 	// variables for zillow API to generate calling
 		 number= place.address_components[0].long_name;
 		 street = place.address_components[1].long_name;
@@ -74,16 +80,6 @@ $("#address input").click(showPage)
 
 	 // Get the place details from the autocomplete object.
      place2 = autocomplete2.getPlace();
-    // variables for zillow API to generate calling
-        number2= place2.address_components[0].long_name;
-        street2 = place2.address_components[1].long_name;
-        city2 = place2.address_components[3].long_name;
-        state_short2 = place2.address_components[5].short_name;
-        zipCode2 = place2.address_components[7].long_name;         
-        // variables for crimespot API to generate calling;
-        latitude2 = place2.geometry.location.lat();
-        longitude2 = place2.geometry.location.lng();
-
 
 // replacing “ ” to "+" 
 		number = number.replace(" ", "+");
@@ -111,8 +107,10 @@ $("button").on("click", function(event){
 	// console.log("latitude =" + latitude);
 	// console.log("longitude =" + longitude);
 	event.preventDefault();
-	showPage()
+	getAddressInfo();
+	showPage();
 
+});
 // converting xml to Json format
 function xmlToJson(xml) {
     
@@ -150,6 +148,9 @@ function xmlToJson(xml) {
     return obj;
 };
 // Zillow Get Search Results API Call;
+
+function getAddressInfo() {
+	if (addressFound === false) {
 	var zillowKey = "X1-ZWz1930iltfqiz_35s1w";
 	var queryURL = "http://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=" + zillowKey + "&address=" 
 	+ number + street + "&citystatezip=" + city + state_short + zipCode;
@@ -159,20 +160,29 @@ function xmlToJson(xml) {
 		method: "GET"
 	}).done(function(data){
 			// console.log(queryURL);
-			// console.log(xmlToJson(data));
+			console.log(xmlToJson(data));
 		// define result for further grabbing value from objects
 		var result = xmlToJson(data)["SearchResults:searchresults"].response.results.result;
 		// display property value 
+		var finalDiv = $("<div>");
 		var newDiv = $("<div id='value'>");			
 		var value = result.zestimate.amount["#text"];
-			$("#collapse1").html("Value: $" + value);
+			newDiv.html("Value: $" + value);
+			// $("#collapse1").html(newDiv);
 			// console.log("amount is: $" + value);
 		// display property Sqft;
+		var newDiv2 = $("<div id='land'>");
 		var lotSqft = result.lotSizeSqFt["#text"];
-			console.log(lotSqft + "Sqft");
+			newDiv2.html("Land: " + lotSqft + "sqft");
+			// $("#conllapse1").html(newDiv2);
+			// console.log(lotSqft + "Sqft");
 		// property yeat of built
+		var newDiv3 = $("<div id='year'>");
 		var yearBuilt = result.yearBuilt["#text"];
-			console.log("year: " + yearBuilt);
+			newDiv3.html("Year of Built: " + yearBuilt);
+			// console.log("year: " + yearBuilt);
+		finalDiv.append(newDiv,newDiv2,newDiv3);
+		$("#zillow").html(finalDiv);
   });
 // CrimeSpot API Call;
 	var crimeKey = "privatekeyforspotcrimepublicusers-commercialuse-877.410.1607";
@@ -186,13 +196,16 @@ function xmlToJson(xml) {
 	// generate crimespot details;
 		var crimes = data.crimes;
 	// loop crimespot object array;
-		for (i = 0 ; i < 5; i++){
+		for (i = 0 ; i < 10; i++){
+			//data of crimespot
 			var type = crimes[i].type;
 			var date = crimes[i].date;
-			var addressCrime = crimes[i].address;
+			var addressCrime = crimes[i].address;	
+			$("#crime > tbody").append("<tr><td>" + type + "</td><td>" + date + "</td><td>" + addressCrime + "</td></tr>");	
 		}
-
+		
  	});
+
 // Nearby school rating from google place nearbySearch API 
 	var googleKey = "&key=AIzaSyCGlIx60fJjaUtHja6IujdQL-wg5PvT_OM";
 	var queryURL3 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&location=" + latitude + "," + longitude + "&radius=10000&type=school" + googleKey;
@@ -201,18 +214,23 @@ function xmlToJson(xml) {
 		method: "GET"
 	}).done(function(data){
 		// console.log("this is ", queryURL3);
-		console.log("this is ", data);
+		// console.log("this is ", data);
 
 		var schoolResult = data.results;
 		for (i = 0; i < 5 ; i++){
 		var rating = schoolResult[i].rating;
 		var schoolName = schoolResult[i].name;
-		console.log(rating);
-		console.log(schoolName);
+		// console.log(rating);
+		// console.log(schoolName);
+		$("#school > tbody").append("<tr><td>" + schoolName + "</td><td>" + rating + "</td></tr>");
 		}
 
 	});
-});
+
+	addressFound = true;
+	};
+};
+
 
 
         
