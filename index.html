@@ -38,7 +38,7 @@
                   <br>
             
             <button class="btn btn-primary" id="addressInput" type="submit">Submit</button>
-     
+
             
     </form>
 
@@ -81,8 +81,7 @@
  <div class="row">
   <div class="col-md-12">
     <div class="thumbnail">
-      <a href="https://photonet.hotpads.com/search/listingPhoto/Vaultware/46089/0001_1985068515_medium.jpg">
-        <img src="https://photonet.hotpads.com/search/listingPhoto/ZillowSale/89476851/0000_1433934107_medium.jpg" alt="img1" style="width:100%">
+  
         <div class="caption">
         </div>
       </a>
@@ -101,7 +100,7 @@
       </h4>
     </div>
     <div id="collapse1" class="panel-collapse collapse in">
-      <div class="panel-body">This is where our information about home value will go.</div>
+      <div class="panel-body" id="zillow"></div>
     </div>
   </div>
   <div class="panel panel-default">
@@ -112,7 +111,16 @@
       </h4>
     </div>
     <div id="collapse2" class="panel-collapse collapse">
-      <div class="panel-body">This is where our information about crime data will go.</div>
+      <div class="panel-body">
+        <table class="data" id="crime">
+            <thead>
+              <th>type</th>
+              <th>date</th>
+              <th>address</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+      </div>
     </div>
   </div>
   <div class="panel panel-default">
@@ -123,7 +131,15 @@
       </h4>
     </div>
     <div id="collapse3" class="panel-collapse collapse">
-      <div class="panel-body">This is where our information about schools will go.</div>
+      <div class="panel-body">
+        <table class="data" id="school">
+            <thead>
+              <th>School Name</th>
+              <th>Rating</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

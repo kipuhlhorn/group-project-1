@@ -21,7 +21,7 @@
  var latitude;
  var longitude;
 
- // 	var clickHandler = function(showPage){
+ //     var clickHandler = function(showPage){
  //     $.ajax({
  //       url:  url,
  //       type: 'POST',
@@ -147,32 +147,43 @@
      // Zillow Get Search Results API Call;
 
      function promFunc() {
-	     var zillowKey = "X1-ZWz1930iltfqiz_35s1w";
-	     var queryURL = "http://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=" + zillowKey + "&address=" +
-	         number + street + "&citystatezip=" + city + state_short + zipCode;
+         var zillowKey = "X1-ZWz1930iltfqiz_35s1w";
+         var queryURL = "http://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=" + zillowKey + "&address=" +
+             number + street + "&citystatezip=" + city + state_short + zipCode;
 
-	     var crimeKey = "privatekeyforspotcrimepublicusers-commercialuse-877.410.1607";
-	     var queryURL2 = "http://api.spotcrime.com/crimes.json?key=" + crimeKey + "&lat=" + latitude + "&lon=" + longitude + "&radius=50";
-	     var googleKey = "&key=AIzaSyCGlIx60fJjaUtHja6IujdQL-wg5PvT_OM";
-	     var queryURL3 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&location=" + latitude + "," + longitude + "&radius=10000&type=school" + googleKey;
+         var crimeKey = "privatekeyforspotcrimepublicusers-commercialuse-877.410.1607";
+         var queryURL2 = "http://api.spotcrime.com/crimes.json?key=" + crimeKey + "&lat=" + latitude + "&lon=" + longitude + "&radius=50";
+         var googleKey = "&key=AIzaSyCGlIx60fJjaUtHja6IujdQL-wg5PvT_OM";
+         var queryURL3 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&location=" + latitude + "," + longitude + "&radius=10000&type=school" + googleKey;
          return Promise.all([
              $.ajax({
                  url: queryURL,
                  method: "GET",
                  success: function(data) {
                      // console.log(queryURL);
-                     // console.log(xmlToJson(data));
+                     console.log(xmlToJson(data));
                      // define result for further grabbing value from objects
                      var result = xmlToJson(data)["SearchResults:searchresults"].response.results.result;
-                     // property estimate value  
+                     // display property value 
+                     var finalDiv = $("<div>");
+                     var newDiv = $("<div id='value'>");
                      var value = result.zestimate.amount["#text"];
-                     console.log("amount is: $" + value);
-                     // property Sqft;
+                     newDiv.html("Value: $" + value);
+                     // $("#collapse1").html(newDiv);
+                     // console.log("amount is: $" + value);
+                     // display property Sqft;
+                     var newDiv2 = $("<div id='land'>");
                      var lotSqft = result.lotSizeSqFt["#text"];
-                     console.log(lotSqft + "Sqft");
+                     newDiv2.html("Land: " + lotSqft + "sqft");
+                     // $("#conllapse1").html(newDiv2);
+                     // console.log(lotSqft + "Sqft");
                      // property yeat of built
+                     var newDiv3 = $("<div id='year'>");
                      var yearBuilt = result.yearBuilt["#text"];
-                     console.log("year: " + yearBuilt);
+                     newDiv3.html("Year of Built: " + yearBuilt);
+                     // console.log("year: " + yearBuilt);
+                     finalDiv.append(newDiv, newDiv2, newDiv3);
+                     $("#zillow").html(finalDiv);
                  }
              }),
              // CrimeSpot API Call;
@@ -185,10 +196,12 @@
                      // generate crimespot details;
                      var crimes = data.crimes;
                      // loop crimespot object array;
-                     for (i = 0; i < 5; i++) {
+                     for (i = 0; i < 10; i++) {
+                         //data of crimespot
                          var type = crimes[i].type;
                          var date = crimes[i].date;
                          var addressCrime = crimes[i].address;
+                         $("#crime > tbody").append("<tr><td>" + type + "</td><td>" + date + "</td><td>" + addressCrime + "</td></tr>");
                      }
 
                  }
@@ -199,20 +212,23 @@
                  method: "GET",
                  success: function(data) {
                      // console.log("this is ", queryURL3);
-                     console.log("this is ", data);
-
+                     // console.log("this is ", data);
+console.log('')
                      var schoolResult = data.results;
                      for (i = 0; i < 5; i++) {
                          var rating = schoolResult[i].rating;
                          var schoolName = schoolResult[i].name;
-                         console.log(rating);
-                         console.log(schoolName);
+                         // console.log(rating);
+                         // console.log(schoolName);
+                         $("#school > tbody").append("<tr><td>" + schoolName + "</td><td>" + rating + "</td></tr>");
                      }
                      showPage();
-
                  }
              })
          ]);
      }
-     promFunc().then(showPage);
+     promFunc().then(()=>{
+     	console.log('hi')
+     	showPage();
+     });
  });
