@@ -39,14 +39,10 @@
      autocomplete = new google.maps.places.Autocomplete(
          /** @type {!HTMLInputElement} */
          (document.getElementById('name-input')), { types: ['geocode'] });
-
      // When the user selects an address from the dropdown, populate the address
      // fields in the form.
      autocomplete.addListener('place_changed', fillInAddress);
-     // page 2 autocomplete
-     autocomplete2 = new google.maps.places.Autocomplete(
-         /** @type {!HTMLInputElement} */
-         (document.getElementById('name-input2')), { types: ['geocode'] });
+
  }
  // fill into the input box 
  function fillInAddress() {
@@ -62,8 +58,7 @@
      // undating geocode data
      latitude = place.geometry.location.lat();
      longitude = place.geometry.location.lng();
-     // page 2 autocomplete
-     place2 = autocomplete2.getPlace();
+
      // replacing “ ” to "+" 
      number = number.replace(" ", "+");
      street = street.replace(" ", "+");
@@ -110,6 +105,7 @@
      return obj;
  }
  // trigger button to generate three api calls and jump to page 2
+
  $("#addressInput").click(function(event, xml) {
      event.preventDefault();
 
@@ -124,7 +120,7 @@
          var googleKey = "&key=AIzaSyCGlIx60fJjaUtHja6IujdQL-wg5PvT_OM";
          var queryURL3 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&location=" + latitude + "," + longitude + "&radius=10000&type=school" + googleKey;
 
-         var queryURL4 = "https://maps.googleapis.com/maps/api/streetview?size=600x300&location=" + latitude + "," + longitude + googleKey;
+         var queryURL4 = "https://maps.googleapis.com/maps/api/streetview?size=800x400&location=" + latitude + "," + longitude + googleKey;
          // console.log(queryURL4);
          // append property img
          var temp = $("<img class='img-responsive'>");
@@ -211,14 +207,12 @@
 
          ]);
      }
-     promFunc().then(() => {
-         // console.log('hi')
-         showPage();
-     });
-
+     promFunc().then(
+         showPage()
+     );
  });
 
- // $("#addressInput2").click(function(event, xml) {
- //      event.preventDefault();
- //      promFunc()
- //  });
+ // reload page 
+ function myFunction() {
+     location.reload(true);
+ }

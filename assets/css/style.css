@@ -65,6 +65,7 @@ body {
 
 button{
     margin:10px;
+    text-align:center;
 }
 
 
@@ -72,8 +73,14 @@ button{
 .data th,
 .data td
     {
-
     margin: 2px;
     padding: 5px;
 }
 
+div .thumbnail{
+   text-align: center;
+}
+
+div img{
+    margin:0 auto;
+}
