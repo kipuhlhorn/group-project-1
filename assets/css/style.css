@@ -63,6 +63,12 @@ body {
     display:none;
 }
 
+button{
+    margin:10px;
+}
+
+
+
 .data th,
 .data td
     {
@@ -70,3 +76,4 @@ body {
     margin: 2px;
     padding: 5px;
 }
+

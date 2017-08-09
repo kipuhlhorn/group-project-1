@@ -53,7 +53,6 @@
      // Get the place details from the autocomplete object.
      place = autocomplete.getPlace();
      console.log(place);
-
      // updating address data 
      number = place.address_components[0].long_name;
      street = place.address_components[1].long_name;
@@ -65,9 +64,6 @@
      longitude = place.geometry.location.lng();
      // page 2 autocomplete
      place2 = autocomplete2.getPlace();
-     console.log(place);
-
-
      // replacing “ ” to "+" 
      number = number.replace(" ", "+");
      street = street.replace(" ", "+");
@@ -75,6 +71,8 @@
      street = street.replace(" ", "+");
      zipCode = zipCode.replace(" ", "+");
  }
+
+
  // converting xml to Json format
  function xmlToJson(xml) {
 
@@ -128,9 +126,16 @@
 
          var queryURL4 = "https://maps.googleapis.com/maps/api/streetview?size=600x300&location=" + latitude + "," + longitude + googleKey;
          // console.log(queryURL4);
-         var temp = $("<img>");
-         temp.attr("src",queryURL4);
+         // append property img
+         var temp = $("<img class='img-responsive'>");
+         temp.attr("src", queryURL4);
          $(".caption").html(temp);
+         // append searhing property address
+         var newDiv = $("<div>");
+         var address = place.formatted_address;
+         var p = newDiv.append("<p>");
+         p.html("<h3>" + address + "</h3>");
+         $(".caption").append(newDiv);
          return Promise.all([
              // Zillow Get Search Results API Call;
              $.ajax({
@@ -138,7 +143,7 @@
                  method: "GET",
                  success: function(data) {
                      // console.log(queryURL);
-                     console.log(xmlToJson(data));
+                     // console.log(xmlToJson(data));
                      // define result for further grabbing value from objects
                      var result = xmlToJson(data)["SearchResults:searchresults"].response.results.result;
                      // display property value 
@@ -169,7 +174,7 @@
                  method: "GET",
                  success: function(data) {
                      // console.log("link = " + queryURL2);
-                     console.log("this is ", data);
+                     // console.log("this is ", data);
                      // generate crimespot details;
                      var crimes = data.crimes;
                      // loop crimespot object array;
@@ -204,15 +209,16 @@
              })
 
 
-           
-             
-
          ]);
      }
      promFunc().then(() => {
-         console.log('hi')
+         // console.log('hi')
          showPage();
      });
 
  });
 
+ // $("#addressInput2").click(function(event, xml) {
+ //      event.preventDefault();
+ //      promFunc()
+ //  });
